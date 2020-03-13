@@ -2,14 +2,13 @@
 
 Python script for renaming images to their md5 hash + extention.
 
-```bash
-pip install foobar
-```
+Only jpg and png files are scanned, jfif and jpeg files are renamed to jpg.
+
 
 ## Usage
 
 ```
-python3 rename.py "directory-to-rename"enon'
+python3 rename.py "directory-to-rename"
 ```
 
 ## License
