@@ -22,7 +22,7 @@ for (dirpath, dirnames, filenames) in os.walk(sys.argv[1]):
             continue
         path = os.path.join(dirpath,name)
         ext = name.split(".")[-1]
-        if ext == "jfif":
+        if ext == "jfif" or ext == "jpeg":
             ext = "jpg"
         if ext not in {"jpg","jpeg","png"}:
             continue
@@ -31,6 +31,7 @@ for (dirpath, dirnames, filenames) in os.walk(sys.argv[1]):
             try:
                 newpath =  os.path.join(dirpath,newname)
                 os.rename(path,newpath)
+                print(name,"->",newname)
             except:
                 print("File exists:",newname)
                 os.remove(path)
