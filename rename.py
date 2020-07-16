@@ -1,6 +1,7 @@
 import os
 import sys
 import hashlib
+from send2trash import send2trash
 
 #from stack overflow
 def md5(fname):
@@ -11,11 +12,15 @@ def md5(fname):
     return hash_md5.hexdigest()
 
 
-if len(sys.argv) != 2:
-    print("Please enter path to rename:")
-    exit()
+import easygui
 
-for (dirpath, dirnames, filenames) in os.walk(sys.argv[1]):
+path = easygui.diropenbox()
+
+#if len(sys.argv) != 2:
+#    print("Please enter path to rename:")
+#    exit()
+
+for (dirpath, dirnames, filenames) in os.walk(path):
     #print(dirpath, dirnames, filenames)
     for name in filenames:
         if name[0] == "." or '.' not in name:
@@ -26,14 +31,17 @@ for (dirpath, dirnames, filenames) in os.walk(sys.argv[1]):
             ext = "jpg"
         if ext not in {"jpg","jpeg","png"}:
             continue
+            
+        #generate md5 name
         newname = md5(path) + "." + ext
-        if newname != name:
-            try:
-                newpath =  os.path.join(dirpath,newname)
+        newpath =  os.path.join(dirpath,newname)
+        if newpath != path:            
+            if not os.path.exists(newpath):
+                #pass
                 os.rename(path,newpath)
                 print(name,"->",newname)
-            except:
+            else:
                 print("File exists:",newname)
-                os.remove(path)
-            
+                #os.remove(path)
+                send2trash(path)
 print("Done")
